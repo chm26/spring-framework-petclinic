@@ -1,17 +1,20 @@
-//Jenkinsfile (Declarative Pipeline)
 pipeline {
     agent any
-    stages {
-        stage('Example') {
-            steps {
-                echo 'Hello World'
 
-                script {
-                    def browsers = ['chrome', 'firefox']
-                    for (int i = 0; i < browsers.size(); ++i) {
-                        echo "Testing the ${browsers[i]} browser"
-                    }
-                }
+   parameters {
+        string(defaultValue: "TEST", description: 'What environment?', name: 'userFlag')
+        choice(choices: ['US-EAST-1', 'US-WEST-2'], description: 'What AWS region?', name: 'region')
+    }
+
+    stages {
+        stage("userFlag") {
+            steps {
+                echo "flag: ${params.userFlag}"
+            }
+        }
+         stage("choice") {
+            steps {
+                echo "Aws_region@ ${params.region}"
             }
         }
     }
