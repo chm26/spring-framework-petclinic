@@ -1,21 +1,22 @@
 pipeline {
     agent any
 
-   parameters {
-        string(defaultValue: "TEST", description: 'What environment?', name: 'userFlag')
-        choice(choices: ['US-EAST-1', 'US-WEST-2'], description: 'What AWS region?', name: 'region')
+    tools {
+        maven "maven 3.6"
     }
 
     stages {
-        stage("userFlag") {
-            steps {
-                echo "flag: ${params.userFlag}"
-            }
+        stage('Build') {
+           steps{
+              // Run the maven build
+              sh "mvn clean package"
+           }
         }
-         stage("choice") {
-            steps {
-                echo "Aws_region@ ${params.region}"
-            }
+        stage('Checkstyle') {
+           steps{
+              // Run the maven build with checkstyle
+              sh "mvn clean package checkstyle:checkstyle"
+           }
         }
     }
 }
