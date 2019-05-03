@@ -23,7 +23,7 @@ pipeline {
                     stage('Sonarqube') {
                         steps {
                             withSonarQubeEnv('SonarQube') {
-                            //sh "mvn  clean package sonar:sonar -Dsonar.host_url=$SONAR_HOST_URL "
+                            sh "mvn  clean package sonar:sonar -Dsonar.host_url=$SONAR_HOST_URL "
                             echo "sonar en petclinic"
                             }
                          }
